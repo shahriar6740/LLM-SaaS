@@ -6,6 +6,7 @@ import Register from "@/Pages/Register";
 import { Fragment } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "@/Pages/Login";
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
 								path={ROUTES.HOME}
 								element={<Navigate to={ROUTES.HOME} replace />}
 							/>
-							<Route path={ROUTES.LOGIN} element={<div />} />
+							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />
 						</Routes>
 					</ThemeProvider>

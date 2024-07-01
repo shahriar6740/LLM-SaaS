@@ -8,13 +8,14 @@ import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { RegisterForm } from "@/models/form/RegisterForm";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ROUTES from "@/constants/Routes.ts";
 import { BackgroundBeams } from "@/components/BackgroundBeams";
 
 const Register = () => {
 	const [showPassword, toggleShowPassword] = useToggle(false);
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm<RegisterForm>({
 		defaultValues: {
 			email: "",
@@ -29,15 +30,16 @@ const Register = () => {
 			setLoading(true);
 			await new Promise((resolve, reject) => {
 				setTimeout(() => {
-					reject();
-				});
+					resolve();
+				}, 2000);
 			});
+			navigate(ROUTES.CONFIRM_ACCOUNT);
 		} catch (error) {
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [navigate]);
 
 	return (
 		<BackgroundBeams>

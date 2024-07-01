@@ -7,6 +7,7 @@ import { Fragment } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "@/Pages/Login";
+import ConfirmAccount from "@/Pages/ConfirmAccount";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
 							/>
 							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />
+							<Route path={ROUTES.CONFIRM_ACCOUNT} element={<ConfirmAccount />} />
 						</Routes>
 					</ThemeProvider>
 				</AppContextProvider>

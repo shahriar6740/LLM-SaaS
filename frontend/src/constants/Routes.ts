@@ -10,7 +10,7 @@ const ROUTES = {
 	REGISTER: "/register",
 	LOGIN: "/login",
 	HOME: "/",
-	IDENTITY_CONFIRM: "/confirm-identity",
+	CONFIRM_ACCOUNT: "/confirm-account",
 	FORGET_PASSWORD: "/forget-password"
 };
 

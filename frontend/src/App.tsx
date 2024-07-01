@@ -32,7 +32,7 @@ function App() {
 						<Routes>
 							<Route
 								path={ROUTES.HOME}
-								element={<Navigate to={ROUTES.HOME} replace />}
+								element={<Navigate to={ROUTES.REGISTER} replace />}
 							/>
 							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />

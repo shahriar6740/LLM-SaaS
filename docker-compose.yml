@@ -1,24 +1,57 @@
-version: "3.8"
-services:
-  frontend:
-    environment:
-      # For aws-amplify
-      VITE_AWS_PROJECT_REGION: ${AWS_CLOUD_REGION}
-      VITE_AWS_COGNITO_REGION: ${AWS_CLOUD_REGION}
-      VITE_AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
-      VITE_AWS_COGNITO_USER_POOL_CLIENT_ID: ${AWS_COGNITO_USER_POOL_CLIENT_ID}
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/frontend
-      - /frontend/node_modules
-    command: sh -c "npm install && npm run dev"
-networks:
-  internal-network:
-    driver: bridge
-    name: caden
-
-volumes:
-  db:
-    driver: local
+#version: '3.8'
+#
+#services:
+#  web_backend:
+#    image: your-docker-repo/web_backend:latest
+#    container_name: web_backend
+#    ports:
+#      - "8000:8000"
+#    networks:
+#      - microservices-network
+#    environment:
+#      - DATABASE_URL=your_database_url
+#      - OTHER_ENV_VAR=your_value
+#    depends_on:
+#      - payment
+#      - rag_pipeline
+#
+#  payment:
+#    image: your-docker-repo/payment:latest
+#    container_name: payment
+#    ports:
+#      - "8001:8001"
+#    networks:
+#      - microservices-network
+#    environment:
+#      - DATABASE_URL=your_database_url
+#      - OTHER_ENV_VAR=your_value
+#
+#  rag_pipeline:
+#    image: your-docker-repo/rag_pipeline:latest
+#    container_name: rag_pipeline
+#    ports:
+#      - "8002:8002"
+#    networks:
+#      - microservices-network
+#    environment:
+#      - DATABASE_URL=your_database_url
+#      - OTHER_ENV_VAR=your_value
+#
+frontend:
+  environment:
+    # For aws-amplify
+    VITE_AWS_PROJECT_REGION: ${AWS_CLOUD_REGION}
+    VITE_AWS_COGNITO_REGION: ${AWS_CLOUD_REGION}
+    VITE_AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
+    VITE_AWS_COGNITO_USER_POOL_CLIENT_ID: ${AWS_COGNITO_USER_POOL_CLIENT_ID}
+  build: ./frontend
+  ports:
+    - "5173:5173"
+  volumes:
+    - ./frontend:/frontend
+    - /frontend/node_modules
+  command: sh -c "npm install && npm run dev"
+#
+#networks:
+#  microservices-network:
+#    driver: bridge

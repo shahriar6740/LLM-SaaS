@@ -1,8 +1,8 @@
-import React, { forwardRef, ReactNode, useState } from "react";
-import { Input } from "@/components/ui/input.tsx";
-import { cn } from "@/lib/utils.ts";
+import React, { forwardRef, InputHTMLAttributes, ReactNode, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-export interface InputWithIconProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputWithIconProps extends InputHTMLAttributes<HTMLInputElement> {
 	prependIcon?: ReactNode;
 	appendIcon?: ReactNode;
 	wrapperClassName?: string;

@@ -10,7 +10,7 @@ const ROUTES = {
 	REGISTER: "/register",
 	LOGIN: "/login",
 	HOME: "/",
-	CONFIRM_ACCOUNT: "/confirm-account",
+	CONFIRM_ACCOUNT: (username?: string, email?: string) => username && email ? `/confirm-account?username=${username}&email=${email}` : "/confirm-account",
 	FORGET_PASSWORD: "/forget-password"
 };
 

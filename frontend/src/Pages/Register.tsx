@@ -1,16 +1,18 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { signUp } from "aws-amplify/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { CircleUserRound, Eye, EyeOff, LockKeyhole, Mail, User } from "lucide-react";
+
+import ROUTES from "@/constants/Routes";
+import useToggle from "@/hooks/useToggle";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { CircleUserRound, Eye, EyeOff, LockKeyhole, Mail, User } from "lucide-react";
 import InputWithIcon from "@/components/ui/inputWithIcon";
-import useToggle from "@/hooks/useToggle";
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
 import { RegisterForm } from "@/models/form/RegisterForm";
-import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import ROUTES from "@/constants/Routes.ts";
 import { BackgroundBeams } from "@/components/BackgroundBeams";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Register = () => {
 	const [showPassword, toggleShowPassword] = useToggle(false);
@@ -28,13 +30,24 @@ const Register = () => {
 	const onRegister = useCallback(async (data: RegisterForm) => {
 		try {
 			setLoading(true);
-			await new Promise((resolve, reject) => {
-				setTimeout(() => {
-					resolve();
-				}, 2000);
+			const { nextStep } = await signUp({
+				username: data.email,
+				password: data.password,
+				options: {
+					userAttributes: {
+						email: data.email,
+						name: data.name,
+						preferred_username: data.username
+					},
+					autoSignIn: true
+				}
 			});
-			navigate(ROUTES.CONFIRM_ACCOUNT);
+			if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
+				console.log("YES");
+			}
+			navigate(ROUTES.CONFIRM_ACCOUNT(data.username, data.email));
 		} catch (error) {
+			console.log(error);
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);

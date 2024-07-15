@@ -1,15 +1,15 @@
 import React, { useCallback, useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card.tsx";
-import { Label } from "@/components/ui/label.tsx";
-import InputWithIcon from "@/components/ui/inputWithIcon.tsx";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import InputWithIcon from "@/components/ui/inputWithIcon";
 import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import ROUTES from "@/constants/Routes.ts";
-import useToggle from "@/hooks/useToggle.tsx";
+import ROUTES from "@/constants/Routes";
+import useToggle from "@/hooks/useToggle";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { LoginForm } from "@/models/form/LoginForm.ts";
+import { LoginForm } from "@/models/form/LoginForm";
 import { BackgroundBeams } from "@/components/BackgroundBeams";
 
 const Login = () => {

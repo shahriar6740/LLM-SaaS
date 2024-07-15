@@ -1,15 +1,35 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AppContextProvider } from "@/context/AppContext";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { Amplify } from "aws-amplify";
+import { Fragment } from "react";
+import { defaultStorage } from "aws-amplify/utils";
+import { Bounce, ToastContainer } from "react-toastify";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { cognitoUserPoolsTokenProvider } from "aws-amplify/auth/cognito";
+import "react-toastify/dist/ReactToastify.css";
+
+import Login from "@/Pages/Login";
 import ROUTES from "@/constants/Routes";
 import Register from "@/Pages/Register";
-import { Fragment } from "react";
-import { Bounce, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Login from "@/Pages/Login";
 import ConfirmAccount from "@/Pages/ConfirmAccount";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { AppContextProvider } from "@/context/AppContext";
+
+Amplify.configure({
+	Auth: {
+		Cognito: {
+			identityPoolId: "",
+			//  Amazon Cognito User Pool ID
+			userPoolId: import.meta.env.VITE_AWS_COGNITO_USER_POOL_ID,
+			// OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+			userPoolClientId: import.meta.env.VITE_AWS_COGNITO_USER_POOL_CLIENT_ID
+			// OPTIONAL - This is used when autoSignIn is enabled for Auth.signUp
+			// 'code' is used for Auth.confirmSignUp, 'link' is used for email link verification
+		}
+	}
+});
+cognitoUserPoolsTokenProvider.setKeyValueStorage(defaultStorage);
 
 function App() {
+	console.log(import.meta.env.AWS_COGNITO_USER_POOL_ID);
 
 	return (
 		<Fragment>
@@ -32,11 +52,11 @@ function App() {
 						<Routes>
 							<Route
 								path={ROUTES.HOME}
-								element={<Navigate to={ROUTES.REGISTER} replace />}
+								element={<div>Hello</div>}
 							/>
 							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />
-							<Route path={ROUTES.CONFIRM_ACCOUNT} element={<ConfirmAccount />} />
+							<Route path={ROUTES.CONFIRM_ACCOUNT()} element={<ConfirmAccount />} />
 						</Routes>
 					</ThemeProvider>
 				</AppContextProvider>

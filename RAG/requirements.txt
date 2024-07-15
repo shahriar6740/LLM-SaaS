@@ -5,3 +5,4 @@ pinecone-client
 markdown-it-py
 mdit_plain
 pypdf
+fastapi[all]

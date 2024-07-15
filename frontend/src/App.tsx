@@ -12,6 +12,7 @@ import Register from "@/Pages/Register";
 import ConfirmAccount from "@/Pages/ConfirmAccount";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AppContextProvider } from "@/context/AppContext";
+import Home from "@/Pages/Home";
 
 Amplify.configure({
 	Auth: {
@@ -50,10 +51,7 @@ function App() {
 				<AppContextProvider>
 					<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 						<Routes>
-							<Route
-								path={ROUTES.HOME}
-								element={<div>Hello</div>}
-							/>
+							<Route path={ROUTES.HOME} element={<Home />} />
 							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />
 							<Route path={ROUTES.CONFIRM_ACCOUNT()} element={<ConfirmAccount />} />

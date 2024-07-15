@@ -1,18 +1,21 @@
-import React, { useCallback, useState } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import InputWithIcon from "@/components/ui/inputWithIcon";
-import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import ROUTES from "@/constants/Routes";
-import useToggle from "@/hooks/useToggle";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { fetchAuthSession, signIn } from "aws-amplify/auth";
+import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
+
+import ROUTES from "@/constants/Routes";
+import { Label } from "@/components/ui/label";
+import useToggle from "@/hooks/useToggle";
+import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/models/form/LoginForm";
+import InputWithIcon from "@/components/ui/inputWithIcon";
 import { BackgroundBeams } from "@/components/BackgroundBeams";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [showPassword, toggleShowPassword] = useToggle(false);
 	const [loading, setLoading] = useState(false);
 	const { register, handleSubmit } = useForm<LoginForm>({
@@ -25,12 +28,17 @@ const Login = () => {
 	const onLogin = useCallback(async (data: LoginForm) => {
 		try {
 			setLoading(true);
-			await new Promise((resolve, reject) => {
-				setTimeout(() => {
-					reject();
-				});
+			const userInfo = await signIn({
+				username: data.email,
+				password: data.password
 			});
-		} catch (error) {
+			console.log(userInfo);
+			if (userInfo.isSignedIn && userInfo.nextStep.signInStep === "DONE") {
+				const session = await fetchAuthSession();
+				console.log(session);
+				navigate("/");
+			}
+		} catch (error: any) {
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);
@@ -84,7 +92,7 @@ const Login = () => {
 							</form>
 						</CardContent>
 						<CardFooter className="flex flex-col">
-							<Button variant="default" className="p-2 w-full" type="submit" form="login-form">
+							<Button variant="default" className="p-2 w-full" type="submit" form="login-form" disabled={loading}>
 								Login
 							</Button>
 							<span className="mt-8 text-xs">Don't have an account? {" "}

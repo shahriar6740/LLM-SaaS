@@ -5,11 +5,11 @@ import ROUTES from "@/constants/Routes";
 import { useAppContext } from "@/context/AppContext";
 import { toast } from "react-toastify";
 
-interface ProtectedRouteProps {
+interface PrivateRouteProps {
 	redirectTo?: string;
 }
 
-const PrivateRoutes = (props: ProtectedRouteProps) => {
+const PrivateRoutes = (props: PrivateRouteProps) => {
 	const { redirectTo = ROUTES.LOGIN } = props;
 	const { isUserAuthenticated } = useAppContext();
 	const navigate = useNavigate();

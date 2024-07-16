@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
-import { fetchAuthSession, signIn } from "aws-amplify/auth";
+import { signIn } from "aws-amplify/auth";
 import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 
 import ROUTES from "@/constants/Routes";
@@ -11,11 +11,13 @@ import useToggle from "@/hooks/useToggle";
 import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/models/form/LoginForm";
 import InputWithIcon from "@/components/ui/inputWithIcon";
+import { useAppContext } from "@/context/AppContext";
 import { BackgroundBeams } from "@/components/BackgroundBeams";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Login = () => {
 	const navigate = useNavigate();
+	const { isUserAuthenticated } = useAppContext();
 	const [showPassword, toggleShowPassword] = useToggle(false);
 	const [loading, setLoading] = useState(false);
 	const { register, handleSubmit } = useForm<LoginForm>({
@@ -32,18 +34,18 @@ const Login = () => {
 				username: data.email,
 				password: data.password
 			});
-			console.log(userInfo);
 			if (userInfo.isSignedIn && userInfo.nextStep.signInStep === "DONE") {
-				const session = await fetchAuthSession();
-				console.log(session);
-				navigate("/");
+				const authenticated = await isUserAuthenticated();
+				if (authenticated) {
+					navigate(ROUTES.DASHBOARD);
+				}
 			}
 		} catch (error: any) {
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [isUserAuthenticated, navigate]);
 
 	return (
 		<BackgroundBeams>

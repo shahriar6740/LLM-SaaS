@@ -1,6 +1,20 @@
-#version: '3.8'
-#
-#services:
+version: '3.8'
+
+services:
+  frontend:
+    environment:
+      # For aws-amplify
+      VITE_AWS_PROJECT_REGION: ${AWS_CLOUD_REGION}
+      VITE_AWS_COGNITO_REGION: ${AWS_CLOUD_REGION}
+      VITE_AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
+      VITE_AWS_COGNITO_USER_POOL_CLIENT_ID: ${AWS_COGNITO_USER_POOL_CLIENT_ID}
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+    command: sh -c "npm install && npm run dev"
 #  web_backend:
 #    image: your-docker-repo/web_backend:latest
 #    container_name: web_backend
@@ -36,21 +50,6 @@
 #    environment:
 #      - DATABASE_URL=your_database_url
 #      - OTHER_ENV_VAR=your_value
-#
-frontend:
-  environment:
-    # For aws-amplify
-    VITE_AWS_PROJECT_REGION: ${AWS_CLOUD_REGION}
-    VITE_AWS_COGNITO_REGION: ${AWS_CLOUD_REGION}
-    VITE_AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
-    VITE_AWS_COGNITO_USER_POOL_CLIENT_ID: ${AWS_COGNITO_USER_POOL_CLIENT_ID}
-  build: ./frontend
-  ports:
-    - "5173:5173"
-  volumes:
-    - ./frontend:/frontend
-    - /frontend/node_modules
-  command: sh -c "npm install && npm run dev"
 #
 #networks:
 #  microservices-network:

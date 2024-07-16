@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import { ConfirmAccountForm } from "@/models/form/ConfirmAccountForm";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAppContext } from "@/context/AppContext";
 
 const ConfirmAccount = () => {
+	const { isUserAuthenticated } = useAppContext();
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
 	const [timer, setTimer] = useState(0);
@@ -47,15 +49,18 @@ const ConfirmAccount = () => {
 			if (isSignUpComplete && nextStep.signUpStep === "COMPLETE_AUTO_SIGN_IN") {
 				const autoSignInData = await autoSignIn();
 				if (autoSignInData.isSignedIn && autoSignInData.nextStep.signInStep === "DONE") {
-					navigate(ROUTES.HOME);
+					const authenticated = await isUserAuthenticated();
+					if (authenticated) {
+						navigate(ROUTES.DASHBOARD);
+					}
 				}
 			}
-		} catch (error) {
+		} catch (error: any) {
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [isUserAuthenticated, navigate]);
 
 	useEffect(() => {
 		let interval: NodeJS.Timeout;

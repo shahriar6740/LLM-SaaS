@@ -13,6 +13,8 @@ import ConfirmAccount from "@/Pages/ConfirmAccount";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AppContextProvider } from "@/context/AppContext";
 import Home from "@/Pages/Home";
+import Landing from "@/Pages/Landing";
+import PrivateRoutes from "@/components/PrivateRoutes";
 
 Amplify.configure({
 	Auth: {
@@ -30,8 +32,6 @@ Amplify.configure({
 cognitoUserPoolsTokenProvider.setKeyValueStorage(defaultStorage);
 
 function App() {
-	console.log(import.meta.env.AWS_COGNITO_USER_POOL_ID);
-
 	return (
 		<Fragment>
 			<ToastContainer
@@ -51,7 +51,10 @@ function App() {
 				<AppContextProvider>
 					<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 						<Routes>
-							<Route path={ROUTES.HOME} element={<Home />} />
+							<Route element={<PrivateRoutes />}>
+								<Route path={ROUTES.DASHBOARD} element={<Home />} />
+							</Route>
+							<Route path={ROUTES.LANDING} element={<Landing />} />
 							<Route path={ROUTES.LOGIN} element={<Login />} />
 							<Route path={ROUTES.REGISTER} element={<Register />} />
 							<Route path={ROUTES.CONFIRM_ACCOUNT()} element={<ConfirmAccount />} />

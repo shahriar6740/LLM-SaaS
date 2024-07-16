@@ -9,7 +9,8 @@ const ROUTES = {
 	// },
 	REGISTER: "/register",
 	LOGIN: "/login",
-	HOME: "/",
+	LANDING: "/",
+	DASHBOARD: "/dashboard",
 	CONFIRM_ACCOUNT: (username?: string, email?: string) => username && email ? `/confirm-account?username=${username}&email=${email}` : "/confirm-account",
 	FORGET_PASSWORD: "/forget-password"
 };

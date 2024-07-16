@@ -43,9 +43,8 @@ const Register = () => {
 				}
 			});
 			if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
-				console.log("YES");
+				navigate(ROUTES.CONFIRM_ACCOUNT(data.username, data.email));
 			}
-			navigate(ROUTES.CONFIRM_ACCOUNT(data.username, data.email));
 		} catch (error) {
 			console.log(error);
 			toast.error(error?.message || "An unexpected error occurred");

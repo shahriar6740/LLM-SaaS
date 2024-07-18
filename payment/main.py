@@ -9,7 +9,7 @@ env_path = Path(".") / ".env"
 load_dotenv(dotenv_path=env_path)
 
 app = FastAPI()
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+stripe.api_key = os.getenv("STRIPE_KEY")
 
 
 @app.get("/checkout/")

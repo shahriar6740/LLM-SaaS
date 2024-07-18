@@ -17,7 +17,6 @@ const ConfirmAccount = () => {
 	const navigate = useNavigate();
 	const [timer, setTimer] = useState(0);
 	const [loading, setLoading] = useState(false);
-	const [codeSent, setCodeSent] = useState(false);
 	const { handleSubmit, control } = useForm<ConfirmAccountForm>({
 		defaultValues: {
 			otp: ""
@@ -30,7 +29,6 @@ const ConfirmAccount = () => {
 			console.log("resending");
 			await resendSignUpCode({ username: searchParams.get("email") || "" });
 			setTimer(3 * 60);
-			setCodeSent(true);
 		} catch (error) {
 
 		} finally {
@@ -51,7 +49,7 @@ const ConfirmAccount = () => {
 				if (autoSignInData.isSignedIn && autoSignInData.nextStep.signInStep === "DONE") {
 					const authenticated = await isUserAuthenticated();
 					if (authenticated) {
-						navigate(ROUTES.DASHBOARD);
+						navigate(ROUTES.DASHBOARD.BASE);
 					}
 				}
 			}
@@ -69,7 +67,7 @@ const ConfirmAccount = () => {
 				setTimer(prev => prev - 1);
 			}, 1000);
 		} else {
-			setCodeSent(false);
+			// @ts-ignore
 			clearInterval(interval);
 		}
 		return () => clearInterval(interval);

@@ -12,9 +12,11 @@ import Register from "@/Pages/Register";
 import ConfirmAccount from "@/Pages/ConfirmAccount";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AppContextProvider } from "@/context/AppContext";
-import Home from "@/Pages/Home";
 import Landing from "@/Pages/Landing";
 import PrivateRoutes from "@/components/PrivateRoutes";
+import NavBar from "@/components/NavBar";
+import Dashboard from "@/Pages/Dashboard";
+import Files from "@/Pages/Files";
 
 Amplify.configure({
 	Auth: {
@@ -50,9 +52,12 @@ function App() {
 			<BrowserRouter>
 				<AppContextProvider>
 					<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+						<NavBar />
 						<Routes>
 							<Route element={<PrivateRoutes />}>
-								<Route path={ROUTES.DASHBOARD} element={<Home />} />
+								<Route path={ROUTES.DASHBOARD.BASE} element={<Dashboard />}>
+									<Route index={true} element={<Files />} />
+								</Route>
 							</Route>
 							<Route path={ROUTES.LANDING} element={<Landing />} />
 							<Route path={ROUTES.LOGIN} element={<Login />} />

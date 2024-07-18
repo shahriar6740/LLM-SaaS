@@ -37,7 +37,7 @@ const Login = () => {
 			if (userInfo.isSignedIn && userInfo.nextStep.signInStep === "DONE") {
 				const authenticated = await isUserAuthenticated();
 				if (authenticated) {
-					navigate(ROUTES.DASHBOARD);
+					navigate(ROUTES.DASHBOARD.BASE);
 				}
 			}
 		} catch (error: any) {

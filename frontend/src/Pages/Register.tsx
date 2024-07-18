@@ -45,8 +45,7 @@ const Register = () => {
 			if (nextStep.signUpStep === "CONFIRM_SIGN_UP") {
 				navigate(ROUTES.CONFIRM_ACCOUNT(data.username, data.email));
 			}
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
 			toast.error(error?.message || "An unexpected error occurred");
 		} finally {
 			setLoading(false);
@@ -118,7 +117,7 @@ const Register = () => {
 							</form>
 						</CardContent>
 						<CardFooter className="flex flex-col">
-							<Button variant="default" className="p-2 w-full" type="submit" form="register-form">
+							<Button variant="default" className="p-2 w-full" type="submit" form="register-form" disabled={loading}>
 								Register
 							</Button>
 							<span className="mt-4 text-xs mr-auto text-muted-foreground">By creating an account you agree to the terms and conditions.</span>

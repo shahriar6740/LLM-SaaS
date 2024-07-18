@@ -10,7 +10,7 @@ import {
 } from "react";
 import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth";
 import { UserDetails } from "@/models/UserDetails";
-import useScrollToAchor from "@/hooks/useScrollToAchor";
+import useScrollToAchor from "@/hooks/useScrollToAnchor";
 
 type AppContextType = {
 	appLoading: boolean;
@@ -19,6 +19,9 @@ type AppContextType = {
 	setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
 	isUserAuthenticated: () => Promise<boolean>
 	currentAuthenticatedUser: UserDetails | null;
+	sideBarOpen: boolean;
+	setSideBarOpen: Dispatch<SetStateAction<boolean>>;
+	onUserLogout: () => void;
 };
 
 const APP_CONTEXT_DEFAULT_VALUES: AppContextType = {
@@ -29,7 +32,12 @@ const APP_CONTEXT_DEFAULT_VALUES: AppContextType = {
 	isAuthenticated: false,
 	setIsAuthenticated: () => {
 	},
-	isUserAuthenticated: async () => false
+	isUserAuthenticated: async () => false,
+	sideBarOpen: true,
+	setSideBarOpen: () => {
+	},
+	onUserLogout: () => {
+	}
 };
 export const AppContext = createContext<AppContextType>(
 	APP_CONTEXT_DEFAULT_VALUES
@@ -42,8 +50,10 @@ type AppContextProviderProps = {
 export const AppContextProvider = (props: AppContextProviderProps) => {
 	const { children } = props;
 	const [appLoading, setAppLoading] = useState(APP_CONTEXT_DEFAULT_VALUES.appLoading);
+	const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
 	const [isAuthenticated, setIsAuthenticated] = useState(APP_CONTEXT_DEFAULT_VALUES.isAuthenticated);
 	const [currentAuthenticatedUser, setCurrentAuthenticatedUser] = useState<UserDetails | null>(null);
+	const [sideBarOpen, setSideBarOpen] = useState(APP_CONTEXT_DEFAULT_VALUES.sideBarOpen);
 	useScrollToAchor();
 
 	const isUserAuthenticated = useCallback(async () => {
@@ -76,6 +86,11 @@ export const AppContextProvider = (props: AppContextProviderProps) => {
 		}
 	}, []);
 
+	const onUserLogout = useCallback(() => {
+		setIsAuthenticated(false);
+		setCurrentAuthenticatedUser(null);
+	}, []);
+
 	useEffect(() => {
 		if (isAuthenticated) {
 			void getUserDetails();
@@ -85,12 +100,15 @@ export const AppContextProvider = (props: AppContextProviderProps) => {
 	return (
 		<AppContext.Provider
 			value={{
+				onUserLogout,
 				setAppLoading,
 				appLoading,
 				isAuthenticated,
 				setIsAuthenticated,
 				isUserAuthenticated,
-				currentAuthenticatedUser
+				currentAuthenticatedUser,
+				sideBarOpen,
+				setSideBarOpen
 			}}
 		>
 			{children}

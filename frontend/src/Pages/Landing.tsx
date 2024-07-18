@@ -1,14 +1,12 @@
-import LandingPageNavBar from "@/components/LandingPageNavBar";
 import Hero from "@/components/ui/Hero";
 import Benefits from "@/components/Benefits";
-import { Features } from "@/components/Features";
-import { Pricing } from "@/components/Pricing";
 import { Footer } from "@/components/Footer";
+import { Pricing } from "@/components/Pricing";
+import { Features } from "@/components/Features";
 
 const Landing = () => {
 	return (
 		<section className="min-h-screen">
-			<LandingPageNavBar />
 			<Hero />
 			<Benefits />
 			<Features />

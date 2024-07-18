@@ -77,3 +77,6 @@ async def cancel():
 
 ## detailed tutorial
 ## https://gist.github.com/Filimoa/fa5b249cfff69e4072cb7ccce9f172bb
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8095)

@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 COPY . /app
 
 # Copy the .env file
-COPY .env .env
+#COPY .env .env
 
 EXPOSE 8095
 # Command to run the application

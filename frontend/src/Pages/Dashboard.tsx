@@ -1,11 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Outlet } from "react-router-dom";
 import SideBar from "@/components/SideBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Dashboard = () => {
-	const navigate = useNavigate();
-	const [showSidebar, setShowSidebar] = useState(false);
 
 	return (
 		<div className="flex pt-16">

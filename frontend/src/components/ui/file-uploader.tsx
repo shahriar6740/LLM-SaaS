@@ -225,7 +225,7 @@ export const FileUploader = forwardRef<
 					tabIndex={0}
 					onKeyDownCapture={handleKeyDown}
 					className={cn(
-						"grid w-full focus:outline-none overflow-hidden ",
+						"grid focus:outline-none overflow-hidden ",
 						className,
 						{
 							"gap-2": value && value.length > 0
@@ -252,7 +252,7 @@ export const FileUploaderContent = forwardRef<
 
 	return (
 		<div
-			className={cn("w-full px-1")}
+			className={cn(" px-1")}
 			ref={containerRef}
 			aria-description="content file holder"
 		>
@@ -320,13 +320,13 @@ export const FileInput = forwardRef<
 		<div
 			ref={ref}
 			{...props}
-			className={`relative w-full ${
+			className={`relative ${
 				isLOF ? "opacity-50 cursor-not-allowed " : "cursor-pointer "
 			}`}
 		>
 			<div
 				className={cn(
-					`w-full rounded-lg duration-300 ease-in-out
+					` rounded-lg duration-300 ease-in-out
          ${
 						dropzoneState.isDragAccept
 							? "border-green-500"
